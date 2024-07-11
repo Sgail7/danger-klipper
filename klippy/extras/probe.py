@@ -19,6 +19,7 @@ class PrinterProbe:
         self.printer = config.get_printer()
         self.name = config.get_name()
         self.mcu_probe = mcu_probe
+        gcode = self.printer.lookup_object('gcode')
         self.dummy_gcode_cmd = gcode.create_gcode_command("", "", {})
         self.speed = config.getfloat("speed", 5.0, above=0.0)
         self.lift_speed = config.getfloat("lift_speed", self.speed, above=0.0)
