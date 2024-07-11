@@ -392,7 +392,7 @@ class Calibrater:
                            probe_point[1], None))
 
         # probe the point
-        pos = probe.run_probe(self.probe, self.gcmd)
+        pos = probe.PrinterProbe.run_probe(self.probe, self.gcmd)
         #self.current_measured_z = pos[2]
 
         # horizontal_move_z (to prevent probe trigger or hitting bed)
