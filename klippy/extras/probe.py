@@ -98,6 +98,27 @@ class PrinterProbe:
             desc=self.cmd_Z_OFFSET_APPLY_PROBE_help,
         )
 
+    def get_probe_params(self, gcmd=None):
+        if gcmd is None:
+            gcmd = self.dummy_gcode_cmd
+        probe_speed = gcmd.get_float("PROBE_SPEED", self.speed, above=0.)
+        lift_speed = gcmd.get_float("LIFT_SPEED", self.lift_speed, above=0.)
+        samples = gcmd.get_int("SAMPLES", self.sample_count, minval=1)
+        sample_retract_dist = gcmd.get_float("SAMPLE_RETRACT_DIST",
+                                             self.sample_retract_dist, above=0.)
+        samples_tolerance = gcmd.get_float("SAMPLES_TOLERANCE",
+                                           self.samples_tolerance, minval=0.)
+        samples_retries = gcmd.get_int("SAMPLES_TOLERANCE_RETRIES",
+                                       self.samples_retries, minval=0)
+        samples_result = gcmd.get("SAMPLES_RESULT", self.samples_result)
+        return {'probe_speed': probe_speed,
+                'lift_speed': lift_speed,
+                'samples': samples,
+                'sample_retract_dist': sample_retract_dist,
+                'samples_tolerance': samples_tolerance,
+                'samples_tolerance_retries': samples_retries,
+                'samples_result': samples_result}
+    
     def _handle_homing_move_begin(self, hmove):
         if self.mcu_probe in hmove.get_mcu_endstops():
             self.mcu_probe.probe_prepare(hmove)
