@@ -64,8 +64,6 @@ class AxisTwistCompensation:
 
         self.printer.register_event_handler("probe:update_results",
                                             self._update_z_compensation_value)
-        
-
 
     def _update_z_compensation_value(self, pos):
         if self.zx_compensations:
@@ -87,6 +85,9 @@ class AxisTwistCompensation:
             comp_start,
             comp_end
             ):
+        
+        if not self.zx_compensations:
+            return
         
         sample_count = len(z_compensations)
         spacing = ((comp_end - comp_start)
