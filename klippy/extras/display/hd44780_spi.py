@@ -22,7 +22,8 @@ class hd44780_spi:
             "hd44780_protocol_init", True
         )
         # spi config
-        self.spi = bus.MCU_SPI_from_config(config, 0x00, pin_option="latch_pin")
+        self.spi = bus.MCU_SPI_from_config(
+            config, 0x00, pin_option="latch_pin", has_soft_miso=False)
         self.mcu = self.spi.get_mcu()
         # self.spi.spi_send([0x01,0xa0])
         self.data_mask = 1 << 1
